@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>TortoMagiya — вкус как искусство</title>
+<meta name="description" content="Авторские торты на заказ: свадебные шедевры и праздничные торты. Расчёт и обсуждение декора в Telegram.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F6EEE0;
+    --cream-deep: #EFE3CF;
+    --powder: #F0D8D0;
+    --gold: #B98A4B;
+    --gold-soft: #D8B67E;
+    --ink: #3A2A27;
+    --ink-soft: #7A6560;
+    --white: #FFFCF7;
+    --powder-soft: #F8E8E2;
+    --cherry: #8E2F45;
+    --cherry-deep: #74243A;
+    --serif: "Cormorant Garamond", "Times New Roman", serif;
+    --sans: "Manrope", "Segoe UI", system-ui, sans-serif;
+    --shadow-s: 0 6px 20px rgba(90,60,40,.10);
+    --shadow-m: 0 18px 50px rgba(90,60,40,.16);
+    --shadow-l: 0 40px 90px rgba(90,60,40,.22);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); font-weight: 300; font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 300; line-height: .98; letter-spacing: -0.015em; color: var(--ink); }
+  h2 { font-size: clamp(2.8rem, 7vw, 5.6rem); }
+  h3 { font-size: 1.9rem; font-weight: 400; line-height: 1.1; }
+  em { font-style: italic; }
+  section { padding: 160px 0; }
+  .kicker { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--gold); margin-bottom: 20px; }
+  .intro { max-width: 30em; margin-top: 32px; color: var(--ink-soft); }
+
+  .btn { display: inline-block; background: var(--cherry); color: #FFF6F2; text-decoration: none; padding: 17px 38px; border-radius: 999px; font-weight: 400; font-size: .95rem; letter-spacing: .02em; box-shadow: 0 8px 24px rgba(142,47,69,.35), 0 0 22px rgba(176,70,97,.35); transition: transform .35s ease, box-shadow .35s ease, background-color .35s; }
+  .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 34px rgba(142,47,69,.45), 0 0 38px rgba(196,88,115,.6); background: var(--cherry-deep); }
+
+  /* Шапка */
+  .bar { position: fixed; inset: 0 0 auto 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 22px 36px; }
+  .bar a { text-decoration: none; }
+  .bar .name { font-family: var(--serif); font-size: 1.6rem; font-weight: 400; }
+  .bar .go { font-size: .9rem; padding: 10px 22px; border-radius: 999px; background: rgba(255,252,247,.7); backdrop-filter: blur(8px); box-shadow: var(--shadow-s), 0 0 18px rgba(176,70,97,.28); transition: box-shadow .35s; }
+  .bar .go:hover { box-shadow: var(--shadow-s), 0 0 30px rgba(196,88,115,.55); }
+
+  /* Главный экран */
+  .hero { position: relative; min-height: 100svh; padding: 0; overflow: hidden; display: flex; align-items: center; transition: background-color .9s ease; }
+  .hero[data-theme="wedding"] { background: var(--cream); }
+  .hero[data-theme="party"] { background: var(--powder); }
+  .hero::before { content: ""; position: absolute; width: 90vmin; height: 90vmin; right: -10vmin; top: 50%; transform: translateY(-50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,252,247,.95), rgba(255,252,247,0) 68%); }
+  .hero .wrap { position: relative; display: grid; gap: 40px; align-items: center; grid-template-columns: 1fr; padding-top: 120px; padding-bottom: 80px; }
+  @media (min-width: 900px) { .hero .wrap { grid-template-columns: 1.05fr .95fr; gap: 24px; } }
+  .hero h1 { font-size: clamp(3.6rem, 10vw, 8.6rem); }
+  .hero .copy { position: relative; min-height: 15em; }
+  .hero .slide { transition: opacity .7s ease, transform .7s ease; }
+  .hero .slide[hidden-slide] { opacity: 0; transform: translateY(14px); pointer-events: none; position: absolute; inset: 0; }
+  .hero .slide p { max-width: 24em; margin: 28px 0 36px; color: var(--ink-soft); font-size: 1.1rem; }
+  .tabs { display: inline-flex; gap: 6px; padding: 6px; border-radius: 999px; background: var(--powder-soft); box-shadow: var(--shadow-s); margin-top: 8px; }
+  .tab { padding: 12px 26px; border-radius: 999px; font-size: .95rem; transition: background-color .4s, color .4s, box-shadow .4s; }
+  .tab[aria-selected="true"] { background: var(--cherry); color: #FFF6F2; box-shadow: var(--shadow-m); }
+  .stage { position: relative; aspect-ratio: 4 / 5; width: 100%; max-width: 460px; margin-inline: auto; }
+  .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 999px 999px 32px 32px; box-shadow: var(--shadow-l); transition: opacity .8s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .stage .s-party { opacity: 0; transform: translateY(24px) scale(.96); }
+  .hero[data-theme="party"] .stage .s-wedding { opacity: 0; transform: translateY(24px) scale(.96); }
+  .hero[data-theme="party"] .stage .s-party { opacity: 1; transform: none; }
+
+  /* Срез торта */
+  .slice { background: var(--white); }
+  .slice-grid { display: grid; gap: 64px; align-items: center; margin-top: 72px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .slice-grid { grid-template-columns: 1fr 1fr; gap: 110px; } }
+  .section-svg { width: 100%; max-width: 380px; margin-inline: auto; filter: drop-shadow(0 30px 40px rgba(90,60,40,.18)); overflow: visible; }
+  .layer { cursor: pointer; transition: opacity .45s ease, transform .45s ease; outline: none; }
+  .layer rect { transition: stroke-width .3s; stroke: var(--gold); stroke-width: 0; }
+  .section-svg.has-pick .layer { opacity: .35; }
+  .section-svg.has-pick .layer.on { opacity: 1; transform: translateX(14px); }
+  .layer.on rect { stroke-width: 3; }
+  .layer:focus-visible rect { stroke-width: 3; }
+  .detail { position: relative; min-height: 22em; }
+  .detail .d { position: absolute; inset: 0 auto auto 0; opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; pointer-events: none; }
+  .detail .d.on { opacity: 1; transform: none; pointer-events: auto; position: relative; }
+  .detail h3 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 18px; }
+  .detail p { color: var(--ink-soft); max-width: 26em; }
+  .detail ul { list-style: none; padding: 0; margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .detail li { padding: 7px 16px; border-radius: 999px; background: var(--cream); box-shadow: var(--shadow-s); font-size: .85rem; }
+  .hintline { margin-top: 36px; font-size: .9rem; color: var(--ink-soft); font-style: italic; }
+
+  /* Карточки */
+  .cards { display: grid; gap: 48px; margin-top: 80px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .cards { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
+  .card { position: relative; }
+  .card .pic { position: relative; overflow: hidden; border-radius: 28px; aspect-ratio: 4 / 5; box-shadow: var(--shadow-m); transition: box-shadow .5s; }
+  .card:nth-child(1) .pic { background: linear-gradient(180deg, #F8EFE1, #EBD9BF); }
+  .card:nth-child(2) .pic { background: linear-gradient(180deg, #F6E1DA, #EAC6BB); }
+  .card:nth-child(3) .pic { background: linear-gradient(180deg, #EFE5D2, #E0CFA9); }
+  .card .pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+  .card:hover .pic { box-shadow: var(--shadow-l); }
+  .card:hover .pic img, .card:focus-within .pic img { transform: scale(1.07); }
+  .card .act { z-index: 2; }
+  .card .pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(58,42,39,.45), rgba(58,42,39,0) 45%); opacity: 0; transition: opacity .5s; }
+  .card:hover .pic::after, .card:focus-within .pic::after { opacity: 1; }
+  .path-grid { display: grid; gap: 64px; align-items: start; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .path-grid { grid-template-columns: 1.1fr .9fr; gap: 90px; } .path-photo { position: sticky; top: 120px; } }
+  .path-photo { margin-top: 90px; }
+  .path-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 999px 999px 32px 32px; box-shadow: var(--shadow-l); }
+  .path-photo figcaption { margin-top: 18px; font-family: var(--serif); font-style: italic; font-size: 1.2rem; color: var(--ink-soft); text-align: center; }
+  .path .timeline { margin-left: 0; margin-right: 0; }
+  .card .act { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; justify-content: center; opacity: 0; transform: translateY(16px); transition: opacity .5s ease, transform .5s ease; }
+  .card:hover .act, .card:focus-within .act { opacity: 1; transform: none; }
+  .card .act .btn { padding: 13px 28px; font-size: .88rem; }
+  .card h3 { margin: 28px 0 10px; }
+  .card p { color: var(--ink-soft); font-size: .98rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px 14px; margin-top: 14px; font-size: .85rem; color: var(--gold); opacity: .55; transform: translateY(-6px); transition: opacity .5s ease, transform .5s ease; }
+  .card:hover .tags, .card:focus-within .tags { opacity: 1; transform: none; }
+  @media (hover: none) { .card .act, .tags { opacity: 1; transform: none; } .card .act { position: static; margin-top: 18px; justify-content: flex-start; } }
+
+  /* Калькулятор */
+  .calc { background: var(--white); }
+  .calc-grid { display: grid; gap: 48px; margin-top: 80px; align-items: stretch; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .calc-grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
+  .field { margin-bottom: 52px; }
+  .field > label, .field > .lbl { display: block; font-family: var(--serif); font-size: 1.6rem; margin-bottom: 20px; color: var(--ink); }
+  .guests-row { display: flex; align-items: center; gap: 24px; }
+  .num { width: 104px; padding: 12px 8px 12px 18px; border-radius: 16px; border: 0; background: var(--cream); box-shadow: inset 0 2px 6px rgba(90,60,40,.10); font: 400 1.5rem var(--serif); color: var(--ink); text-align: center; }
+  .num:focus-visible { outline: 2px solid var(--gold); }
+  input[type=range] { -webkit-appearance: none; appearance: none; flex: 1; height: 8px; border-radius: 999px; background: linear-gradient(90deg, var(--cherry) var(--fill, 10%), var(--powder) var(--fill, 10%)); outline-offset: 8px; cursor: pointer; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; border-radius: 50%; background: var(--white); border: 3px solid var(--cherry); box-shadow: var(--shadow-m); transition: transform .25s; }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.12); }
+  input[type=range]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: var(--white); border: 3px solid var(--cherry); box-shadow: var(--shadow-m); }
+  .scale { display: flex; justify-content: space-between; margin-top: 12px; font-size: .85rem; color: var(--ink-soft); }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 6px; border-radius: 999px; background: var(--powder); box-shadow: inset 0 2px 6px rgba(142,47,69,.10); }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg label { text-align: center; padding: 14px 10px; border-radius: 999px; cursor: pointer; font-size: .95rem; transition: background-color .35s, color .35s, box-shadow .35s; }
+  .seg input:checked + label { background: var(--cherry); color: #FFF6F2; box-shadow: var(--shadow-m); }
+  .seg input:focus-visible + label { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .norm { margin-top: 14px; font-size: .88rem; color: var(--ink-soft); }
+  .result { background: linear-gradient(150deg, #F8E6DF, #EDC8BE); color: var(--ink); border-radius: 36px; padding: 56px 44px; box-shadow: var(--shadow-l); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .result::before { content: ""; position: absolute; width: 380px; height: 380px; right: -140px; top: -140px; border-radius: 50%; background: radial-gradient(circle, rgba(255,252,247,.85), rgba(255,252,247,0) 70%); }
+  .result > * { position: relative; }
+  .res-lbl { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--cherry); }
+  .big { font-family: var(--serif); font-weight: 300; font-size: clamp(5.5rem, 14vw, 9rem); line-height: .95; letter-spacing: -0.03em; color: var(--cherry); font-variant-numeric: tabular-nums; margin: 6px 0 4px; }
+  .big small { font-size: .32em; letter-spacing: 0; margin-left: 10px; color: var(--cherry-deep); }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 36px 0; padding-top: 32px; border-top: 1px solid rgba(142,47,69,.25); }
+  .fact b { display: block; font-family: var(--serif); font-weight: 400; font-size: 2.1rem; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .fact span { font-size: .88rem; color: var(--ink-soft); }
+  .stack { display: flex; flex-direction: column-reverse; align-items: center; gap: 4px; margin-bottom: 8px; min-height: 92px; justify-content: flex-start; }
+  .stack i { display: block; height: 18px; border-radius: 6px; background: linear-gradient(90deg, #B04661, var(--cherry)); box-shadow: 0 4px 10px rgba(142,47,69,.25); transition: width .5s ease, opacity .4s; }
+  .result .btn { background: var(--cherry); color: #FFF6F2; text-align: center; }
+  .result .btn:hover { background: var(--cherry-deep); }
+  .fine { margin-top: 20px; font-size: .78rem; line-height: 1.5; color: var(--ink-soft); }
+  @media (max-width: 640px) { .result { padding: 40px 28px; border-radius: 28px; } .num { width: 88px; } .guests-row { gap: 16px; } }
+
+  /* Путь торта */
+  .path { background: var(--cream-deep); }
+  .timeline { position: relative; max-width: 760px; margin: 90px auto 0; padding-left: 64px; }
+  .timeline::before { content: ""; position: absolute; left: 21px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(var(--gold), var(--gold-soft)); }
+  .stp { position: relative; padding-bottom: 72px; }
+  .stp:last-child { padding-bottom: 0; }
+  .stp .dot { position: absolute; left: -64px; top: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--white); box-shadow: var(--shadow-m); display: grid; place-items: center; font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--gold); }
+  .stp h3 { margin-bottom: 12px; padding-top: 6px; }
+  .stp p { color: var(--ink-soft); max-width: 30em; }
+
+  /* Финал */
+  .finale { text-align: center; background: linear-gradient(180deg, var(--cream), var(--powder)); }
+  .finale .wrap { display: flex; flex-direction: column; align-items: center; }
+  .finale p { max-width: 26em; margin: 28px 0 44px; color: var(--ink-soft); }
+  footer { background: var(--powder); text-align: center; padding: 0 28px 40px; font-size: .85rem; color: var(--ink-soft); }
+
+  .js .rv { opacity: 0; transform: translateY(24px); transition: opacity 1s ease, transform 1s ease; }
+  .js .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition-duration: .01ms !important; }
+    .js .rv { opacity: 1; transform: none; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    section { padding: 100px 0; }
+    .bar { padding: 16px 20px; }
+    .wrap { padding: 0 22px; }
+    .hero .copy { min-height: 19em; }
+    .tab { padding: 11px 16px; font-size: .88rem; }
+    .timeline { padding-left: 56px; }
+    .stp .dot { left: -56px; }
+    .timeline::before { left: 21px; }
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+
+<!-- Иллюстрации тортов (используются в нескольких местах) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="cream" x1="0" x2="1"><stop offset="0" stop-color="#FFFBF2"/><stop offset=".55" stop-color="#F7EBD6"/><stop offset="1" stop-color="#E6D3B3"/></linearGradient>
+    <linearGradient id="pink" x1="0" x2="1"><stop offset="0" stop-color="#FCE9E4"/><stop offset=".55" stop-color="#F2CFC6"/><stop offset="1" stop-color="#DDAFA4"/></linearGradient>
+    <linearGradient id="goldg" x1="0" x2="1"><stop offset="0" stop-color="#E6C892"/><stop offset=".5" stop-color="#B98A4B"/><stop offset="1" stop-color="#D3A96B"/></linearGradient>
+    <linearGradient id="choc" x1="0" x2="1"><stop offset="0" stop-color="#6B4A3F"/><stop offset="1" stop-color="#3E2823"/></linearGradient>
+
+    <symbol id="cakeWed" viewBox="0 0 400 460">
+      <ellipse cx="200" cy="432" rx="150" ry="14" fill="#000" opacity=".08"/>
+      <rect x="62" y="332" width="276" height="96" rx="14" fill="url(#cream)"/>
+      <rect x="62" y="372" width="276" height="5" fill="url(#goldg)"/>
+      <rect x="98" y="248" width="204" height="86" rx="12" fill="url(#cream)"/>
+      <rect x="98" y="284" width="204" height="4" fill="url(#goldg)"/>
+      <rect x="134" y="176" width="132" height="74" rx="10" fill="url(#cream)"/>
+      <rect x="134" y="208" width="132" height="4" fill="url(#goldg)"/>
+      <g fill="#F0D8D0"><circle cx="76" cy="334" r="16"/><circle cx="112" cy="250" r="13"/><circle cx="288" cy="250" r="13"/><circle cx="324" cy="334" r="16"/><circle cx="150" cy="178" r="11"/><circle cx="250" cy="178" r="11"/></g>
+      <g fill="#B98A4B"><circle cx="76" cy="334" r="4"/><circle cx="112" cy="250" r="3.5"/><circle cx="288" cy="250" r="3.5"/><circle cx="324" cy="334" r="4"/><circle cx="150" cy="178" r="3"/><circle cx="250" cy="178" r="3"/></g>
+      <g><circle cx="200" cy="164" r="14" fill="#F0D8D0"/><circle cx="188" cy="152" r="10" fill="#EBC9BF"/><circle cx="212" cy="152" r="10" fill="#EBC9BF"/><circle cx="200" cy="146" r="9" fill="#F7E4DD"/><circle cx="200" cy="158" r="4" fill="#B98A4B"/></g>
+      <g fill="#8E3B46"><circle cx="170" cy="170" r="5"/><circle cx="232" cy="171" r="5"/></g>
+    </symbol>
+
+    <symbol id="cakeParty" viewBox="0 0 400 460">
+      <ellipse cx="200" cy="432" rx="140" ry="14" fill="#000" opacity=".08"/>
+      <rect x="76" y="298" width="248" height="130" rx="16" fill="url(#pink)"/>
+      <path d="M76 330 q15 22 31 0 t31 0 t31 0 t31 0 t31 0 t31 0 t31 0 V316 H76z" fill="#FFF8F2"/>
+      <rect x="112" y="204" width="176" height="96" rx="14" fill="url(#pink)"/>
+      <path d="M112 232 q14 20 29 0 t29 0 t29 0 t29 0 t29 0 t29 0 V220 H112z" fill="#FFF8F2"/>
+      <g fill="#8E3B46"><circle cx="150" cy="200" r="9"/><circle cx="176" cy="196" r="9"/><circle cx="224" cy="196" r="9"/><circle cx="250" cy="200" r="9"/></g>
+      <g fill="#6E8F63"><ellipse cx="200" cy="196" rx="10" ry="5"/></g>
+      <g fill="#B98A4B"><circle cx="102" cy="360" r="3"/><circle cx="140" cy="390" r="3"/><circle cx="260" cy="370" r="3"/><circle cx="296" cy="398" r="3"/><circle cx="188" cy="262" r="3"/><circle cx="236" cy="270" r="3"/></g>
+      <g stroke="#FFF8F2" stroke-width="7" stroke-linecap="round"><path d="M164 196 V158"/><path d="M200 196 V150"/><path d="M236 196 V158"/></g>
+      <g fill="#E6B25E"><path d="M164 148 q-7 -10 0 -20 q7 10 0 20z"/><path d="M200 140 q-7 -10 0 -20 q7 10 0 20z"/><path d="M236 148 q-7 -10 0 -20 q7 10 0 20z"/></g>
+    </symbol>
+
+    <symbol id="cakeJub" viewBox="0 0 400 460">
+      <ellipse cx="200" cy="432" rx="140" ry="14" fill="#000" opacity=".08"/>
+      <rect x="70" y="312" width="260" height="116" rx="14" fill="url(#cream)"/>
+      <rect x="70" y="350" width="260" height="6" fill="url(#goldg)"/>
+      <rect x="110" y="222" width="180" height="92" rx="12" fill="url(#cream)"/>
+      <rect x="110" y="256" width="180" height="5" fill="url(#goldg)"/>
+      <path d="M110 222 q14 22 30 0 t30 0 t30 0 t30 0 t30 0 V214 H110z" fill="url(#goldg)"/>
+      <text x="200" y="196" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="92" font-style="italic" fill="url(#goldg)">50</text>
+      <g fill="#E6C892"><circle cx="86" cy="330" r="3"/><circle cx="314" cy="336" r="3"/><circle cx="130" cy="380" r="3"/><circle cx="270" cy="392" r="3"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="bar">
+  <a class="name" href="#top">TortoMagiya</a>
+  <a class="go" href="#calc">Рассчитать торт</a>
+</div>
+
+<main id="top">
+
+  <!-- Главный экран: переключатель направлений -->
+  <section class="hero" data-theme="wedding" id="hero">
+    <div class="wrap">
+      <div>
+        <div class="copy">
+          <div class="slide" id="sl-wedding">
+            <h1>Свадебные <em>шедевры</em></h1>
+            <p>Многоярусные торты с ручным декором. Ярусы, цветы и золото собираются под вашу свадьбу и вашу палитру.</p>
+            <a class="btn" href="#order">Обсудить свадебный торт</a>
+          </div>
+          <div class="slide" id="sl-party" hidden-slide>
+            <h1>Праздники и <em>дни рождения</em></h1>
+            <p>Нежные торты с ягодами и свечами. Для дней рождения, детских праздников и семейных встреч.</p>
+            <a class="btn" href="#order">Обсудить праздничный торт</a>
+          </div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Направления">
+          <button class="tab" role="tab" id="tab-wedding" aria-selected="true" aria-controls="sl-wedding">Свадебные шедевры</button>
+          <button class="tab" role="tab" id="tab-party" aria-selected="false" aria-controls="sl-party">Праздничные</button>
+        </div>
+      </div>
+      <div class="stage">
+        <img class="s-wedding" src="photos/wedding.jpg" alt="Свадебный трёхъярусный торт с розами и золотом">
+        <img class="s-party" src="photos/birthday.jpg" alt="Праздничный торт с кремовыми розетками и свечой">
+      </div>
+    </div>
+  </section>
+
+  <!-- Торт в разрезе -->
+  <section class="slice" id="slice">
+    <div class="wrap">
+      <p class="kicker rv">Из чего сделан торт</p>
+      <h2 class="rv">Торт <em>в разрезе</em></h2>
+      <div class="slice-grid">
+        <svg class="section-svg rv" id="sectionSvg" viewBox="0 0 360 420" role="group" aria-label="Слои торта в разрезе">
+          <defs><clipPath id="clipCake"><rect x="40" y="30" width="260" height="330" rx="26"/></clipPath></defs>
+          <g clip-path="url(#clipCake)">
+            <g class="layer" data-i="0" tabindex="0" role="button" aria-label="Декор"><rect x="40" y="30" width="260" height="62" fill="#F0D8D0"/><g fill="#8E3B46"><circle cx="90" cy="48" r="9"/><circle cx="130" cy="44" r="9"/><circle cx="210" cy="44" r="9"/><circle cx="250" cy="48" r="9"/></g><rect x="40" y="82" width="260" height="4" fill="url(#goldg)"/></g>
+            <g class="layer" data-i="1" tabindex="0" role="button" aria-label="Ягодное конфи"><rect x="40" y="92" width="260" height="44" fill="#B5495A"/><g fill="#8E3B46" opacity=".6"><circle cx="80" cy="114" r="5"/><circle cx="150" cy="120" r="4"/><circle cx="220" cy="110" r="5"/><circle cx="270" cy="118" r="4"/></g></g>
+            <g class="layer" data-i="2" tabindex="0" role="button" aria-label="Ванильный бисквит"><rect x="40" y="136" width="260" height="80" fill="#F2DDB0"/><g fill="#D9BC82"><circle cx="90" cy="170" r="2.5"/><circle cx="140" cy="190" r="2.5"/><circle cx="190" cy="165" r="2.5"/><circle cx="240" cy="195" r="2.5"/><circle cx="270" cy="160" r="2.5"/></g></g>
+            <g class="layer" data-i="3" tabindex="0" role="button" aria-label="Крем-чиз"><rect x="40" y="216" width="260" height="56" fill="#FBEBD2"/></g>
+            <g class="layer" data-i="4" tabindex="0" role="button" aria-label="Шоколадная основа"><rect x="40" y="272" width="260" height="88" fill="url(#choc)"/><g fill="#B98A4B" opacity=".6"><circle cx="80" cy="300" r="3"/><circle cx="150" cy="330" r="3"/><circle cx="220" cy="304" r="3"/><circle cx="262" cy="336" r="3"/></g></g>
+          </g>
+          <ellipse cx="170" cy="392" rx="150" ry="10" fill="#000" opacity=".08"/>
+        </svg>
+
+        <div class="detail rv" id="detail" aria-live="polite">
+          <div class="d on" data-i="default">
+            <h3>Нажмите на слой</h3>
+            <p>Пять слоёв, у каждого свой характер. Выберите любой на схеме и узнайте, из чего он сделан.</p>
+            <p class="hintline">Слои можно переключать и с клавиатуры.</p>
+          </div>
+          <div class="d" data-i="0">
+            <h3>Живой декор</h3>
+            <p>Свежие ягоды, садовые цветы и съедобный золотой лист. Всё собирается вручную в день выдачи, чтобы торт выглядел так, как задумано на эскизе.</p>
+            <ul><li>съедобное золото</li><li>садовая малина</li><li>цветы без обработки</li></ul>
+          </div>
+          <div class="d" data-i="1">
+            <h3>Ягодное конфи</h3>
+            <p>Малина и вишня, сваренные в небольших партиях. Без загустителей, поэтому вкус яркий, с живой кислинкой.</p>
+            <ul><li>малина</li><li>вишня</li><li>без загустителей</li></ul>
+          </div>
+          <div class="d" data-i="2">
+            <h3>Ванильный бисквит</h3>
+            <p>Мадагаскарская ваниль, фермерские яйца и сливочное масло 82%. Бисквит нежный, пропитывается лёгким сиропом и остаётся влажным несколько дней.</p>
+            <ul><li>ваниль Мадагаскара</li><li>фермерские яйца</li><li>масло 82%</li></ul>
+          </div>
+          <div class="d" data-i="3">
+            <h3>Крем-чиз</h3>
+            <p>Сливочный сыр и сливки 35%, взбитые так, чтобы крем держал форму, но таял во рту. Сладость мягкая, без приторности.</p>
+            <ul><li>сливочный сыр</li><li>сливки 35%</li><li>цедра лимона</li></ul>
+          </div>
+          <div class="d" data-i="4">
+            <h3>Шоколадная основа</h3>
+            <p>Бельгийский тёмный шоколад и хрустящее пралине из фундука. Даёт торту опору и приятный контраст текстур.</p>
+            <ul><li>бельгийский шоколад</li><li>пралине из фундука</li><li>морская соль</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Карточки -->
+  <section id="works">
+    <div class="wrap">
+      <p class="kicker rv">Работы</p>
+      <h2 class="rv">Торты <em>под ваш повод</em></h2>
+      <div class="cards">
+        <article class="card rv">
+          <div class="pic"><img src="photos/wedding.jpg" alt="Свадебный трёхъярусный торт" loading="lazy">
+            <div class="act"><a class="btn ghost" href="#order">Узнать стоимость</a></div></div>
+          <h3>Свадебный трёхъярусный</h3>
+          <p>Кремовые ярусы с золотым листом и живыми розами.</p>
+          <div class="tags"><span>#Свадебный</span><span>#Трехъярусный</span><span>#Золото</span></div>
+        </article>
+        <article class="card rv">
+          <div class="pic"><img src="photos/raspberry.jpg" alt="Нежный торт с малиной и белым шоколадом" loading="lazy">
+            <div class="act"><a class="btn ghost" href="#order">Обсудить декор</a></div></div>
+          <h3>Малина и белый шоколад</h3>
+          <p>Лёгкий ванильный торт с ягодами и шоколадными завитками.</p>
+          <div class="tags"><span>#ДеньРождения</span><span>#Ягодный</span><span>#Ванильный</span></div>
+        </article>
+        <article class="card rv">
+          <div class="pic"><img src="photos/orchid.jpg" alt="Строгий белый торт с орхидеей" loading="lazy">
+            <div class="act"><a class="btn ghost" href="#order">Обсудить декор</a></div></div>
+          <h3>Белый торт с орхидеей</h3>
+          <p>Гладкая мастика и один живой акцент для строгого праздника.</p>
+          <div class="tags"><span>#Юбилей</span><span>#Минимализм</span><span>#Орхидея</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Калькулятор -->
+  <section class="calc" id="calc">
+    <div class="wrap">
+      <p class="kicker rv">Калькулятор</p>
+      <h2 class="rv">Торт <em>на ваш праздник</em></h2>
+      <p class="intro rv">Укажите число гостей и повод. Мы подскажем вес, число ярусов и примерную стоимость.</p>
+      <div class="calc-grid">
+        <div class="rv">
+          <div class="field">
+            <label for="guests">Количество гостей</label>
+            <div class="guests-row">
+              <input type="range" id="guests" min="5" max="150" step="1" value="30">
+              <input type="number" class="num" id="guestsNum" min="5" max="150" value="30" inputmode="numeric" aria-label="Количество гостей числом">
+            </div>
+            <div class="scale"><span>5</span><span>150</span></div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="evLbl">Тип события</span>
+            <div class="seg" role="radiogroup" aria-labelledby="evLbl">
+              <input type="radio" name="ev" id="ev-wed" value="wedding" checked><label for="ev-wed">Свадьба</label>
+              <input type="radio" name="ev" id="ev-party" value="party"><label for="ev-party">День рождения / праздник</label>
+            </div>
+            <p class="norm" id="normNote">Норма для свадьбы: 200 г на гостя</p>
+          </div>
+        </div>
+
+        <div class="result rv" aria-live="polite">
+          <p class="res-lbl">Рекомендуемый вес</p>
+          <div class="big"><span id="rWeight">6,0</span><small>кг</small></div>
+          <div class="stack" id="rStack" aria-hidden="true"></div>
+          <div class="facts">
+            <div class="fact"><b id="rTiers">2</b><span id="rTiersLbl">яруса</span></div>
+            <div class="fact"><b id="rPrice">≈ 27 000 ₽</b><span>ориентировочно</span></div>
+          </div>
+          <a class="btn" id="rLink" href="https://t.me/tortomagiya" target="_blank" rel="noopener">Обсудить этот дизайн в Telegram</a>
+          <p class="fine">Точная стоимость зависит от сложности декора и начинки.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Путь торта -->
+  <section class="path" id="path">
+    <div class="wrap">
+      <p class="kicker rv">Путь торта</p>
+      <h2 class="rv">От дегустации <em>до вашего стола</em></h2>
+      <div class="path-grid">
+      <div class="timeline">
+        <div class="stp rv"><span class="dot">1</span><h3>Дегустация</h3><p>Вы пробуете три вкуса из набора и выбираете тот, который запомнится гостям.</p></div>
+        <div class="stp rv"><span class="dot">2</span><h3>Эскиз и согласование</h3><p>Кондитер рисует торт под ваш повод и палитру. Правки до утверждения не ограничены.</p></div>
+        <div class="stp rv"><span class="dot">3</span><h3>Выпечка и сборка</h3><p>Коржи, крем и декор готовятся за два-три дня до праздника, чтобы торт был свежим.</p></div>
+        <div class="stp rv"><span class="dot">4</span><h3>Бережная доставка</h3><p>Торт едет в охлаждаемой упаковке с запасным декором. Мы соберём его на месте, если нужно.</p></div>
+      </div>
+      <figure class="path-photo rv"><img src="photos/section.jpg" alt="Торт в разрезе: бисквит и ягодные слои" loading="lazy"><figcaption>Каждый слой продуман</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Финал -->
+  <section class="finale" id="order">
+    <div class="wrap">
+      <p class="kicker rv">Ваш торт</p>
+      <h2 class="rv">Расскажите <em>о празднике</em></h2>
+      <p class="rv">Напишите нам в Telegram: повод, дату и число гостей. Мы предложим эскиз и назовём стоимость.</p>
+      <a class="btn rv" href="https://t.me/tortomagiya?text=Здравствуйте!%20Хочу%20обсудить%20торт.%20Повод%3A%20%0AДата%3A%20%0AГостей%3A%20" target="_blank" rel="noopener">Написать в Telegram</a>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 TortoMagiya. Учебный проект, кондитерской не существует.</footer>
+
+<script>
+(function () {
+  /* Появление при прокрутке */
+  var els = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function (e) { io.observe(e); });
+  } else { els.forEach(function (e) { e.classList.add('in'); }); }
+
+  /* Главный экран: переключатель */
+  var hero = document.getElementById('hero');
+  var tabs = { wedding: document.getElementById('tab-wedding'), party: document.getElementById('tab-party') };
+  var slides = { wedding: document.getElementById('sl-wedding'), party: document.getElementById('sl-party') };
+  function setTheme(t) {
+    hero.setAttribute('data-theme', t);
+    Object.keys(tabs).forEach(function (k) {
+      tabs[k].setAttribute('aria-selected', k === t ? 'true' : 'false');
+      if (k === t) slides[k].removeAttribute('hidden-slide'); else slides[k].setAttribute('hidden-slide', '');
+    });
+  }
+  Object.keys(tabs).forEach(function (k) {
+    tabs[k].addEventListener('click', function () { setTheme(k); });
+    tabs[k].addEventListener('mouseenter', function () { if (matchMedia('(hover: hover)').matches) setTheme(k); });
+  });
+
+  /* Калькулятор. Цены условные: поменяйте тут */
+  var CFG = {
+    wedding: { grams: 200, rub: 4500, name: 'свадьбы' },
+    party:   { grams: 150, rub: 3200, name: 'дня рождения' }
+  };
+  var gR = document.getElementById('guests'), gN = document.getElementById('guestsNum');
+  var evs = document.querySelectorAll('input[name=ev]');
+  var out = { w: document.getElementById('rWeight'), t: document.getElementById('rTiers'), tl: document.getElementById('rTiersLbl'),
+              p: document.getElementById('rPrice'), s: document.getElementById('rStack'), link: document.getElementById('rLink'),
+              note: document.getElementById('normNote') };
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var shown = { w: null, t: null, p: null };
+  var anim = {};
+  function ruTiers(n) { return n === 1 ? 'ярус' : (n < 5 ? 'яруса' : 'ярусов'); }
+  function animate(key, to, fmt) {
+    var from = shown[key] === null ? to : shown[key];
+    cancelAnimationFrame(anim[key]);
+    if (reduce || from === to) { shown[key] = to; fmt(to); return; }
+    var t0 = performance.now(), dur = 450;
+    (function step(now) {
+      var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      var v = from + (to - from) * e;
+      shown[key] = v; fmt(v);
+      if (k < 1) anim[key] = requestAnimationFrame(step); else { shown[key] = to; fmt(to); }
+    })(t0);
+  }
+  function drawStack(n) {
+    var widths = [150, 124, 98, 72];
+    out.s.innerHTML = '';
+    for (var i = 0; i < n; i++) { var el = document.createElement('i'); el.style.width = widths[i] + 'px'; out.s.appendChild(el); }
+  }
+  function calc() {
+    var ev = document.querySelector('input[name=ev]:checked').value, c = CFG[ev];
+    var guests = Math.max(5, Math.min(150, parseInt(gN.value, 10) || 5));
+    var kg = Math.max(1.5, Math.round(guests * c.grams / 1000 * 2) / 2);   /* шаг 0,5 кг */
+    var tiers = kg <= 3 ? 1 : kg <= 7 ? 2 : kg <= 15 ? 3 : 4;
+    var price = Math.round(kg * c.rub / 100) * 100;
+    animate('w', kg, function (v) { out.w.textContent = v.toFixed(1).replace('.', ','); });
+    animate('t', tiers, function (v) { var r = Math.round(v); out.t.textContent = r; out.tl.textContent = ruTiers(r); });
+    animate('p', price, function (v) { out.p.textContent = '≈ ' + (Math.round(v / 100) * 100).toLocaleString('ru-RU') + ' ₽'; });
+    drawStack(tiers);
+    out.note.textContent = 'Норма для ' + c.name + ': ' + c.grams + ' г на гостя';
+    var msg = 'Здравствуйте! Хочу обсудить торт для ' + c.name + ': ' + guests + ' гостей, около ' + String(kg).replace('.', ',') + ' кг, ' + tiers + ' ' + ruTiers(tiers) + '.';
+    out.link.href = 'https://t.me/tortomagiya?text=' + encodeURIComponent(msg);
+  }
+  function fill() { gR.style.setProperty('--fill', ((gR.value - 5) / 145 * 100) + '%'); }
+  gR.addEventListener('input', function () { gN.value = gR.value; fill(); calc(); });
+  gN.addEventListener('input', function () {
+    var v = parseInt(gN.value, 10);
+    if (!isNaN(v) && v >= 5 && v <= 150) { gR.value = v; fill(); calc(); }
+  });
+  gN.addEventListener('change', function () {
+    var v = Math.max(5, Math.min(150, parseInt(gN.value, 10) || 5));
+    gN.value = v; gR.value = v; fill(); calc();
+  });
+  evs.forEach(function (r) { r.addEventListener('change', calc); });
+  fill(); calc();
+
+  /* Срез торта */
+  var svg = document.getElementById('sectionSvg');
+  var layers = svg.querySelectorAll('.layer');
+  var details = document.querySelectorAll('#detail .d');
+  function pick(i) {
+    svg.classList.add('has-pick');
+    layers.forEach(function (l) { l.classList.toggle('on', l.dataset.i === String(i)); });
+    details.forEach(function (d) { d.classList.toggle('on', d.dataset.i === String(i)); });
+  }
+  layers.forEach(function (l) {
+    l.addEventListener('click', function () { pick(l.dataset.i); });
+    l.addEventListener('mouseenter', function () { if (matchMedia('(hover: hover)').matches) pick(l.dataset.i); });
+    l.addEventListener('focus', function () { pick(l.dataset.i); });
+    l.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(l.dataset.i); } });
+  });
+})();
+</script>
+</body>
+</html>
